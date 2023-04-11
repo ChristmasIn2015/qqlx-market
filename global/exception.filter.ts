@@ -37,7 +37,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
             const rest: RestResponse<null> = {
                 code: null,
                 data: null,
-                message: exception?.message,
+                message: typeof exception === "string" ? exception : exception?.message,
             };
             this.LogRemote.log(ENUM_LOG.ERROR, request.path, chain, rest); // async
             response.json(rest);

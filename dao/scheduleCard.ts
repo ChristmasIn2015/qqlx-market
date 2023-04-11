@@ -21,8 +21,7 @@ export class ScheduleCard implements _ScheduleCard {
     schedule: number;
     @Prop({
         default: 0,
-        get: (value) => (value = (Number(value) || 0) / 100),
-        set: (value) => (value = (Number(value) || 0) * 100),
+        set: (value) => (Number(value) || 0) * 100,
     })
     amount: number;
     @Prop({ default: false })

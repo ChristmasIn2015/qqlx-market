@@ -9,8 +9,6 @@ import { MongooseDao } from "qqlx-sdk";
 export class MarketRole implements _ {
     @Prop({ default: "", required: true })
     userId: string;
-    @Prop({ default: "", required: true })
-    corpId: string;
     @Prop({
         default: ENUM_MARKET_ROLE.BASE,
         enum: [ENUM_MARKET_ROLE.ROOT, ENUM_MARKET_ROLE.BASE],

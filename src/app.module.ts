@@ -11,6 +11,7 @@ import { ScheduleCardOrderService } from "src/scheduleCardOrder/service";
 
 import { ScheduleCardController } from "src/scheduleCard/controller.rest";
 import { ScheduleCardOrderController } from "src/scheduleCardOrder/controller.rest";
+import { AnalysisController } from "src/analysis/controller.rest";
 
 import { ScheduleCardOrderRpc } from "src/scheduleCardOrder/controller.rpc";
 
@@ -24,6 +25,7 @@ import { ScheduleCardOrderRpc } from "src/scheduleCardOrder/controller.rpc";
         ]),
     ],
     controllers: [
+        AnalysisController,
         ScheduleCardController,
         ScheduleCardOrderController,
         //

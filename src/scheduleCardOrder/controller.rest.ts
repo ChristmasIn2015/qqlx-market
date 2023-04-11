@@ -105,7 +105,6 @@ export class ScheduleCardOrderController extends CorpLock {
     }
 
     @Post("/get")
-    @SetMetadata("MarketRole", [ENUM_MARKET_ROLE.ROOT, ENUM_MARKET_ROLE.BASE])
     async getScheduleCardOrder(@Body("dto") dto: getScheduleCardOrderDto, @Body("UserDTO") UserDTO: UserDTO): Promise<getScheduleCardOrderRes> {
         dto.page.startTime = 0;
         dto.page.endTime = Number.MAX_SAFE_INTEGER;
@@ -122,13 +121,15 @@ export class ScheduleCardOrderController extends CorpLock {
             { $match: { _id: { $in: page.list.map((e) => e._id) } } },
             { $lookup: { localField: "cardId", from: "schedulecards", foreignField: "_id", as: "joinCard" } },
         ]);
-        page.list.forEach((e) => (e.joinCard = e.joinCard[0]));
+        page.list.forEach((e) => {
+            e.joinCard = e.joinCard[0];
+            e.amount /= 100;
+        });
 
         return page;
     }
 
     @Patch()
-    @SetMetadata("MarketRole", [ENUM_MARKET_ROLE.ROOT, ENUM_MARKET_ROLE.BASE])
     async patchScheduleCardOrder(@Body("dto") dto: patchScheduleCardOrderDto, @Body("UserDTO") UserDTO: UserDTO): Promise<patchScheduleCardOrderRes> {
         const orders = await this.ScheduleCardOrderDao.query({
             corpId: dto.corpId,

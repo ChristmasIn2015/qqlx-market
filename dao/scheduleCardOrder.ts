@@ -26,8 +26,7 @@ export class ScheduleCardOrder implements _ScheduleCardOrder {
     statusWeChatPay: ENUM_PAY_STATUS_WECHAT;
     @Prop({
         default: 0,
-        get: (value) => (value = (Number(value) || 0) / 100),
-        set: (value) => (value = (Number(value) || 0) * 100),
+        set: (value) => parseInt(((Number(value) || 0) * 100).toString()),
     })
     amount: number;
 

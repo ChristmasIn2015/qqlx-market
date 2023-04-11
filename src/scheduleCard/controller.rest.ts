@@ -44,10 +44,12 @@ export class ScheduleCardController {
     }
 
     @Post("/get")
-    @SetMetadata("MarketRole", [ENUM_MARKET_ROLE.ROOT, ENUM_MARKET_ROLE.BASE])
     async getScheduleCard(@Body("dto") dto: getScheduleCardDto, @Body("UserDTO") UserDTO: UserDTO): Promise<getScheduleCardRes> {
         const results = await this.ScheduleCardDao.query({ scope: dto.scope });
-        return results;
+        return results.map((e) => {
+            e.amount /= 100;
+            return e;
+        });
     }
 
     @Patch()
