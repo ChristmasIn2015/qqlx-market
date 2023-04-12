@@ -32,7 +32,7 @@ import { LogRemote } from "remote/log";
 import { ScheduleCardOrderService } from "src/scheduleCardOrder/service";
 
 @Controller(PATH_MARKET_CARD_ORDER)
-@UseGuards(MarketGuard)
+// @UseGuards(MarketGuard)
 export class ScheduleCardOrderController extends CorpLock {
     private CONFIG_JSON_FILE_JSON: Record<string, any>;
     private payment: any;
@@ -58,7 +58,7 @@ export class ScheduleCardOrderController extends CorpLock {
     }
 
     @Post()
-    @SetMetadata("MarketRole", [ENUM_MARKET_ROLE.ROOT, ENUM_MARKET_ROLE.BASE])
+    // @SetMetadata("MarketRole", [ENUM_MARKET_ROLE.ROOT, ENUM_MARKET_ROLE.BASE])
     async postScheduleCardOrder(@Body("dto") dto: postScheduleCardOrderDto, @Body("UserDTO") UserDTO: UserDTO): Promise<postScheduleCardOrderRes> {
         // 创建本地订单
         const card = await this.ScheduleCardDao.findOne(dto.schema?.cardId);
@@ -96,7 +96,7 @@ export class ScheduleCardOrderController extends CorpLock {
             },
         });
         info = await info.json();
-        this.LogRemote.log(ENUM_LOG.INFO, PATH_MARKET_CARD_ORDER, UserDTO.chain, { name: "postScheduleCardOrder", wx_response: info });
+        // this.LogRemote.log(ENUM_LOG.INFO, PATH_MARKET_CARD_ORDER, UserDTO.chain, { name: "postScheduleCardOrder", wx_response: info });
         // { code_url: 'weixin://wxpay/bizpayurl?pr=AjygadNzz' }
 
         const payUrl = info["code_url"];
