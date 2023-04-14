@@ -32,7 +32,7 @@ import { LogRemote } from "remote/log";
 import { ScheduleCardOrderService } from "src/scheduleCardOrder/service";
 
 @Controller(PATH_MARKET_CARD_ORDER)
-// @UseGuards(MarketGuard)
+@UseGuards(MarketGuard)
 export class ScheduleCardOrderController extends CorpLock {
     private CONFIG_JSON_FILE_JSON: Record<string, any>;
     private payment: any;
@@ -58,12 +58,13 @@ export class ScheduleCardOrderController extends CorpLock {
     }
 
     @Post()
-    // @SetMetadata("MarketRole", [ENUM_MARKET_ROLE.ROOT, ENUM_MARKET_ROLE.BASE])
+    @SetMetadata("MarketRole", null)
     async postScheduleCardOrder(@Body("dto") dto: postScheduleCardOrderDto, @Body("UserDTO") UserDTO: UserDTO): Promise<postScheduleCardOrderRes> {
         // 创建本地订单
+        if (!dto.corpId) throw new Error(`请选择主体`);
         const card = await this.ScheduleCardDao.findOne(dto.schema?.cardId);
         if (!card) throw new Error(`找不到支付商品`);
-        if (!dto.corpId) throw new Error(`请选择公司`);
+        if (card.isDisabled) throw new Error(`无效的礼品卡`);
         const orderLocal = await this.ScheduleCardOrderDao.create({
             corpId: dto.corpId,
             cardId: card._id,
@@ -105,6 +106,7 @@ export class ScheduleCardOrderController extends CorpLock {
     }
 
     @Post("/get")
+    @SetMetadata("MarketRole", null)
     async getScheduleCardOrder(@Body("dto") dto: getScheduleCardOrderDto, @Body("UserDTO") UserDTO: UserDTO): Promise<getScheduleCardOrderRes> {
         dto.page.startTime = 0;
         dto.page.endTime = Number.MAX_SAFE_INTEGER;
@@ -130,6 +132,7 @@ export class ScheduleCardOrderController extends CorpLock {
     }
 
     @Patch()
+    @SetMetadata("MarketRole", null)
     async patchScheduleCardOrder(@Body("dto") dto: patchScheduleCardOrderDto, @Body("UserDTO") UserDTO: UserDTO): Promise<patchScheduleCardOrderRes> {
         const orders = await this.ScheduleCardOrderDao.query({
             corpId: dto.corpId,
