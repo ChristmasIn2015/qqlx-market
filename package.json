@@ -20,8 +20,8 @@
         "async-lock": "^1.4.0",
         "mongoose": "^6.8.3",
         "qqlx-cdk": "^0.0.13",
-        "qqlx-core": "^1.0.43",
-        "qqlx-sdk": "^0.0.38",
+        "qqlx-core": "^1.0.48",
+        "qqlx-sdk": "^0.0.41",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.2.0",
         "wechatpay-node-v3": "^2.1.1"

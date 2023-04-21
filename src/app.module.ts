@@ -4,6 +4,8 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { ScheduleCard, ScheduleCardSchema, ScheduleCardDao } from "dao/scheduleCard";
 import { ScheduleCardOrder, ScheduleCardOrderSchema, ScheduleCardOrderDao } from "dao/scheduleCardOrder";
 import { MarketRole, MarketRoleSchema, MarketRoleDao } from "dao/role";
+import { Intro, IntroSchema, IntroDao } from "dao/intro";
+import { IntroGroup, IntroGroupSchema, IntroGroupDao } from "dao/introGroup";
 
 import { LogRemote } from "remote/log";
 import { UserRemote } from "remote/user";
@@ -12,6 +14,7 @@ import { ScheduleCardOrderService } from "src/scheduleCardOrder/service";
 import { ScheduleCardController } from "src/scheduleCard/controller.rest";
 import { ScheduleCardOrderController } from "src/scheduleCardOrder/controller.rest";
 import { AnalysisController } from "src/analysis/controller.rest";
+import { IntroGroupController } from "src/introGroup/controller.rest";
 
 import { ScheduleCardOrderRpc } from "src/scheduleCardOrder/controller.rpc";
 
@@ -22,12 +25,15 @@ import { ScheduleCardOrderRpc } from "src/scheduleCardOrder/controller.rpc";
             { name: ScheduleCard.name, schema: ScheduleCardSchema },
             { name: ScheduleCardOrder.name, schema: ScheduleCardOrderSchema },
             { name: MarketRole.name, schema: MarketRoleSchema },
+            { name: Intro.name, schema: IntroSchema },
+            { name: IntroGroup.name, schema: IntroGroupSchema },
         ]),
     ],
     controllers: [
         AnalysisController,
         ScheduleCardController,
         ScheduleCardOrderController,
+        IntroGroupController,
         //
         ScheduleCardOrderRpc,
     ],
@@ -35,6 +41,8 @@ import { ScheduleCardOrderRpc } from "src/scheduleCardOrder/controller.rpc";
         ScheduleCardDao,
         ScheduleCardOrderDao,
         MarketRoleDao,
+        IntroDao,
+        IntroGroupDao,
         //
         LogRemote,
         UserRemote,

@@ -25,8 +25,8 @@ export class MarketGuard implements CanActivate {
         const authorization = request.header("Authorization");
         const userInfo = await this.UserRemote.getUserInfo({ jwtString: authorization });
 
+        // 角色认证
         const demands: ENUM_MARKET_ROLE[] = this.reflector.get("MarketRole", context.getHandler());
-
         if (demands) {
             const roles = await this.MarketRoleDao.query({ userId: userInfo.userId });
 
