@@ -51,7 +51,7 @@ export class IntroGroupController {
             ...(search.path && { path: search.path }),
         };
         const results = await this.IntroGroupDao.aggregate([
-            { $match: {} },
+            { $match: match },
             { $lookup: { from: "intros", localField: "_id", foreignField: "groupId", as: "joinIntros" } },
             //
         ]);
