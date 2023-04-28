@@ -38,7 +38,7 @@ export class ScheduleCardOrderService {
             const schema = this.ScheduleCardOrderDao.getSchema();
             schema.corpId = corpId;
             schema.cardId = mini._id;
-            schema.amount = mini.amount;
+            schema.amount = mini.amount / 100;
             schema.statusWeChatPay = ENUM_PAY_STATUS_WECHAT.SUCCESS;
             await this.ScheduleCardOrderDao.create(schema);
         }
