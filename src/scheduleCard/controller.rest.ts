@@ -30,7 +30,7 @@ export class ScheduleCardController {
     @Post()
     @SetMetadata("MarketRole", [ENUM_MARKET_ROLE.ROOT])
     async postScheduleCard(@Body("dto") dto: postScheduleCardDto, @Body("UserDTO") UserDTO: UserDTO): Promise<postScheduleCardRes> {
-        if (!dto.schema?.title) throw new Error("请输入礼品卡名称");
+        if (!dto.schema?.title) throw new Error("请输入时长卡名称");
 
         const schema = this.ScheduleCardDao.getSchema();
         schema.scope = ENUM_PROJECT.KDBGS;
@@ -55,7 +55,7 @@ export class ScheduleCardController {
     @Patch()
     @SetMetadata("MarketRole", [ENUM_MARKET_ROLE.ROOT])
     async patchScheduleCard(@Body("dto") dto: patchScheduleCardDto, @Body("UserDTO") UserDTO: UserDTO): Promise<patchScheduleCardRes> {
-        if (!dto.schema?.title) throw new Error("请输入礼品卡名称");
+        if (!dto.schema?.title) throw new Error("请输入时长卡名称");
 
         const updater = {
             title: dto.schema?.title,
@@ -70,7 +70,7 @@ export class ScheduleCardController {
     @SetMetadata("MarketRole", [ENUM_MARKET_ROLE.ROOT])
     async deleteScheduleCard(@Body("dto") dto: deleteScheduleCardDto, @Body("UserDTO") UserDTO: UserDTO): Promise<deleteScheduleCardRes> {
         const exist = await this.ScheduleCardDao.findOne(dto.cardId);
-        if (!exist) throw new Error(`找不到礼品卡`);
+        if (!exist) throw new Error(`找不到时长卡`);
 
         await this.ScheduleCardDao.updateOne(exist._id, { isDisabled: !exist.isDisabled });
         return null;

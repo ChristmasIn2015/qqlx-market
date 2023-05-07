@@ -64,7 +64,7 @@ export class ScheduleCardOrderController extends CorpLock {
         if (!dto.corpId) throw new Error(`请选择主体`);
         const card = await this.ScheduleCardDao.findOne(dto.schema?.cardId);
         if (!card) throw new Error(`找不到支付商品`);
-        if (card.isDisabled) throw new Error(`无效的礼品卡`);
+        if (card.isDisabled) throw new Error(`无效的时长卡`);
         const orderLocal = await this.ScheduleCardOrderDao.create({
             corpId: dto.corpId,
             cardId: card._id,

@@ -30,7 +30,7 @@ export class ScheduleCardOrderService {
         } else throw ENUM_ERROR_CODE.SCHEDULE_MARKET_BELOW;
     }
 
-    /** 赠送一张金额最小的礼品卡 */
+    /** 赠送一张金额最小的时长卡 */
     async empowerCorp(corpId: string) {
         const minis = await this.ScheduleCardDao.query({ isDisabled: false }, { sortKey: "amount", sortValue: MongodbSort.ASC });
         const mini = minis[0];
