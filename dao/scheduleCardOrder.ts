@@ -4,6 +4,7 @@ import { Model } from "mongoose";
 
 import { ScheduleCardOrder as _ScheduleCardOrder, ENUM_PAY_STATUS_WECHAT } from "qqlx-core";
 import { MongooseDao } from "qqlx-sdk";
+import { bignumber, multiply } from "mathjs";
 
 @Schema()
 export class ScheduleCardOrder implements _ScheduleCardOrder {
@@ -26,7 +27,7 @@ export class ScheduleCardOrder implements _ScheduleCardOrder {
     statusWeChatPay: ENUM_PAY_STATUS_WECHAT;
     @Prop({
         default: 0,
-        set: (value) => parseInt(((Number(value) || 0) * 100).toString()),
+        set: (value) => parseInt(multiply(bignumber(Number(value) || 0), bignumber(100)).toString()),
     })
     amount: number;
 
