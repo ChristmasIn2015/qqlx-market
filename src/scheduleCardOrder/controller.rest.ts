@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 import { join } from "path";
+import { bignumber, ceil } from "mathjs";
 const WxPay = require("wechatpay-node-v3");
 
 import { Controller, Get, Post, Body, Patch, Delete, SetMetadata, UseGuards } from "@nestjs/common";
@@ -68,7 +69,7 @@ export class ScheduleCardOrderController extends CorpLock {
         const orderLocal = await this.ScheduleCardOrderDao.create({
             corpId: dto.corpId,
             cardId: card._id,
-            amount: card.amount,
+            amount: parseInt(ceil(bignumber(Number(card.amount) || 0), bignumber(100)).toString()),
             statusWeChatPay: ENUM_PAY_STATUS_WECHAT.NOTPAY,
         });
 

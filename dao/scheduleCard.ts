@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Schema, Prop, SchemaFactory, InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { bignumber, multiply } from "mathjs";
 
 import { ScheduleCard as _ScheduleCard, ENUM_PROJECT } from "qqlx-core";
 import { MongooseDao } from "qqlx-sdk";
@@ -21,7 +22,7 @@ export class ScheduleCard implements _ScheduleCard {
     schedule: number;
     @Prop({
         default: 0,
-        set: (value) => (Number(value) || 0) * 100,
+        set: (value) => parseInt(multiply(bignumber(Number(value) || 0), bignumber(100)).toString()),
     })
     amount: number;
     @Prop({ default: false })
